@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Panier</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        button {
+            padding: 0.5em 1.5em;
+            background: #efefef;
+            border: none;
+            border-radius: .5rem;
+            color: #444;
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: center;
+            outline: none;
+            cursor: pointer;
+            transition: .2s ease-in-out;
+            box-shadow: -6px -6px 14px rgba(255, 255, 255, .7),
+            -6px -6px 10px rgba(255, 255, 255, .5),
+            6px 6px 8px rgba(255, 255, 255, .075),
+            6px 6px 10px rgba(0, 0, 0, .15);
+        }
+
+        input[type="number"] {
+            margin: 0 15px;
+            width: 50%;
+            padding: 0.5em 1.5em;
+            background: #efefef;
+            border: none;
+            border-radius: .5rem;
+            color: #444;
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: center;
+            outline: none;
+            cursor: pointer;
+            box-shadow: -6px -6px 14px rgba(255, 255, 255, .7),
+            -6px -6px 10px rgba(255, 255, 255, .5),
+            6px 6px 8px rgba(255, 255, 255, .075),
+            6px 6px 10px rgba(0, 0, 0, .15);
+        }
+        table {
+            align-content: center;
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 40px; /* Add some space between the header and the table */
+        }
+
+        thead {
+            background-color: #f2f2f2;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        td img {
+            max-width: 100%;
+            height: auto;
+        }
+        .erreur-message {
+            color: red;
+            font-weight: bold;
+        }
+        .cart-summary{
+            margin-top : 50px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<h2>Votre Panier</h2>
+
+<div th:if="${panier != null and not #maps.isEmpty(panier)}">
+    <table>
+        <thead>
+        <tr>
+            <th>Image</th>
+            <th>Nom</th>
+            <th>Quantité</th>
+            <th>Prix</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="entry : ${panier}" th:with="product=${produitService.findProduitById(entry.key)}">
+            <th:block >
+                <td><img th:src="${product.image}" th:alt="${entry.key}" width="150"></td>
+                <td th:text="${product.nom}"></td>
+            </th:block>
+            <td>
+                <form method="post" th:action="@{/UpdateCart}" th:object="${entry}">
+                    <input type="hidden" name="productId" th:value="${entry.key}">
+                    <input type="number" name="quantity" th:value="${entry.value}" min="0">
+                    <button type="submit">Mettre à jour</button>
+                </form>
+            </td>
+            <td th:text="${product.prix * entry.value} + ' €'"></td>
+            <td>
+                <form method="post" th:action="@{/RemoveFromCart}">
+                    <input type="hidden" name="productId" th:value="${product.id}">
+                    <button type="submit">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="cart-summary">
+        <b th:text="'Total du panier : ' + ${totalAmount} + ' euros'"></b><br><br>
+
+        <form method="post" th:action="@{/ValiderPanier}">
+            <button type="submit">Valider le Panier</button>
+        </form>
+    </div>
+</div>
+
+<div th:unless="${panier != null and not #maps.isEmpty(panier)}">
+    <p>Votre panier est vide.</p>
+</div>
+
+<div th:if="${erreurMessage != null}">
+    <p class="erreur-message" th:text="${erreurMessage}"></p>
+</div>
+</body>
+</html>

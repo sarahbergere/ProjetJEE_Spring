@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Page Administrateur</title>
+    <link rel="stylesheet" type="text/css" href="style.CSS">
+    <style>
+        .client-table {
+            border-collapse: collapse;
+            width: 90%;
+            border-spacing: 10px;
+        }
+
+        .client-table th, .client-table td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="neumorphic-header">
+        <div>
+            <a th:href="@{/bienvenue}"><button>Accueil</button></a>
+            <a th:href="@{/affichageProduit}"><button>A la une</button></a>
+        </div>
+        <h1>Marketplace</h1>
+        <div>
+            <a th:href="@{/panier}"><button>Mon Panier</button></a>
+            <a th:href="@{/logout}"><button>Se déconnecter</button></a>
+        </div>
+    </div>
+</header>
+<h1>Bienvenue, Administrateur</h1>
+
+<p>Vous êtes connecté en tant qu'administrateur. Vous avez accès à des fonctionnalités administratives spéciales.</p>
+
+<table align="center" class="client-table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Droit Actuel</th>
+        <th>Nouveau Droit</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <form th:action="@{/modifyRight}" method="post" th:each="client : ${clients}">
+        <tr>
+            <td th:text="${client.id}"></td>
+            <td th:text="${client.nom}"></td>
+            <td th:text="${client.prenom}"></td>
+            <td th:text="${client.droit}"></td>
+            <td>
+                <select name="nouveauDroit">
+                    <option value="aucun" th:selected="${client.droit eq 'aucun'}">Aucun</option>
+                    <option value="modification" th:selected="${client.droit eq 'modification'}">Modification</option>
+                    <option value="ajout" th:selected="${client.droit eq 'ajout'}">Ajout</option>
+                    <option value="suppression" th:selected="${client.droit eq 'suppression'}">Suppression</option>
+                    <option value="tout" th:selected="${client.droit eq 'tout'}">Tout</option>
+                </select>
+            </td>
+            <td>
+                <input type="hidden" name="clientId" th:value="${client.id}">
+                <input type="submit" value="Valider">
+            </td>
+        </tr>
+    </form>
+    </tbody>
+</table>
+
+<a th:href="@{/editProducts}"><button>Modifier Produit</button></a>
+</body>
+</html>

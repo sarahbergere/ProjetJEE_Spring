@@ -1,5 +1,6 @@
 package marketplace.ProjetJ2EE_SpringBoot.service;
 
+import marketplace.ProjetJ2EE_SpringBoot.model.Client;
 import marketplace.ProjetJ2EE_SpringBoot.repository.CompteBancaireRepository;
 import marketplace.ProjetJ2EE_SpringBoot.model.CompteBancaire;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class CompteBancaireService {
         return compteBancaireRepository.findAll();
     }
 
-    public List<CompteBancaire> getAllComptesBancairesByIdClient(int idClient) {
-        return compteBancaireRepository.findAllByClient_Id(idClient);
+    public List<CompteBancaire> getAllComptesBancairesByIdClient(Client client) {
+        return compteBancaireRepository.findAllByIdClient(client.getId());
     }
 
     public void updateCompteBancaire(CompteBancaire compteBancaire) {

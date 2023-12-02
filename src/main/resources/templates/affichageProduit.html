@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Marketplace</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script>
+        function redirectToPageDesc(idproduct) {
+            window.location.href = "pageDesc?idproduct=" + encodeURIComponent(idproduct);
+        }
+    </script>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="container">
+    <h2>Produits disponibles :</h2>
+    <div class="card-container">
+        <div th:each="produit : ${produits}">
+            <div class="card">
+                <h3 th:text="${produit.nom}"></h3>
+                <img th:src="${produit.image}" th:alt="${produit.nom}">
+                <p><b th:text="${produit.prix} + ' €'"></b></p>
+                <p class="stock" th:text="'Il en reste ' + ${produit.stock} + ' !'"></p>
+                <button type="button" th:onclick="'redirectToPageDesc(' + ${produit.id} + ')'">Acheter</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

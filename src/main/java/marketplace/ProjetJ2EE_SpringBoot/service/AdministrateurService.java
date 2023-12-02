@@ -1,7 +1,7 @@
 package marketplace.ProjetJ2EE_SpringBoot.service;
 
-import marketplace.ProjetJ2EE_SpringBoot.repository.AdministrateurRepository;
 import marketplace.ProjetJ2EE_SpringBoot.model.Administrateur;
+import marketplace.ProjetJ2EE_SpringBoot.repository.AdministrateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,6 @@ import java.util.List;
 
 @Service
 public class AdministrateurService {
-
     private final AdministrateurRepository administrateurRepository;
 
     @Autowired
@@ -17,16 +16,12 @@ public class AdministrateurService {
         this.administrateurRepository = administrateurRepository;
     }
 
-    public Administrateur findById(Long id) {
+    public Administrateur findById(int id) {
         return administrateurRepository.findById(id).orElse(null);
     }
 
     public List<Administrateur> findAll() {
         return administrateurRepository.findAll();
-    }
-
-    public Administrateur findByIdUsername(int id) {
-        return administrateurRepository.findByIdUtilisateur(id);
     }
 
     public void saveOrUpdate(Administrateur administrateur) {
@@ -35,5 +30,13 @@ public class AdministrateurService {
 
     public void delete(Administrateur administrateur) {
         administrateurRepository.delete(administrateur);
+    }
+
+    public Administrateur findByUsername(String username) {
+        return administrateurRepository.findByUsername(username).orElse(null);
+    }
+
+    public String getPasswordById(int adminId) {
+        return administrateurRepository.getPasswordById(adminId);
     }
 }

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Page Client</title>
+    <link rel="stylesheet" type="text/css" href="style.CSS">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .content {
+            width: 80%;
+            margin: auto;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        #suppCompte{
+            background-color: #e2b6b6;
+            border-color: #e2b6b6;
+            border-radius: 50px;
+        }
+
+        #ajoutcompte {
+            max-width: 400px;
+        }
+
+        #ajoutcompte h2 {
+            color: #333;
+        }
+
+        #ajoutcompte label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        #ajoutcompte input {
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #ajoutcompte input[type="submit"] {
+            background-color: #adb4ae;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        #ajoutcompte input[type="submit"]:hover {
+            background-color: #adb4ae;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="neumorphic-header">
+        <div>
+            <a th:href="@{/bienvenue}"><button>Accueil</button></a>
+            <a th:href="@{/affichageProduit}"><button>A la une</button></a>
+        </div>
+        <h1>Marketplace</h1>
+        <div>
+            <a th:href="@{/panier}"><button>Mon Panier</button></a>
+            <a th:href="@{/logout}"><button>Se déconnecter</button></a>
+        </div>
+    </div>
+</header>
+<div class="content">
+    <h1>Bienvenue, <span th:text="${session.pseudo}"></span></h1>
+
+    <p>Vous êtes connecté en tant que client. Vous pouvez accéder à votre compte et effectuer des opérations liées à votre compte.</p>
+    <hr>
+    <div id="informations">
+        <p>
+        <h2>Vos informations</h2>
+        Nom : <span th:text="${session.client.nom}"></span> <br>
+        Prénom : <span th:text="${session.client.prenom}"></span> <br>
+        </p>
+    </div>
+
+    <p th:text="${session.modifierProduit}"></p>
+
+    <hr>
+    <h2>Commandes passées</h2>
+    <div th:if="${#lists.isEmpty(session.client.commandes)}">
+        <p>Il n'y a pas encore de commande pour ce client.</p>
+    </div>
+    <div th:unless="${#lists.isEmpty(session.client.commandes)}">
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Statut de Commande</th>
+                <th>Total</th>
+            </tr>
+            <tr th:each="commande : ${session.client.commandes}">
+                <td th:text="${commande.dateDeCommande}"></td>
+                <td th:text="${commande.statutDeCommande}"></td>
+                <td th:text="${commande.montant}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <hr>
+    <h2>Comptes liés :</h2>
+    <div th:if="${#lists.isEmpty(session.client.comptes)}">
+        <p>Vous n'avez pas encore de compte bancaire lié à votre compte</p>
+    </div>
+    <div th:unless="${#lists.isEmpty(session.client.comptes)}">
+        <ul>
+            <li th:each="compte : ${session.client.comptes}">
+                <span th:text="${compte.titulaireDuCompte} + ' - ' + ${compte.numeroDeCompte} + ' - ' + ${compte.solde} + ' €'"></span>
+                <form action="DeleteBankAccountServlet" method="post" style="display:inline;padding:0">
+                    <input type="hidden" name="compteId" th:value="${compte.id}">
+                    <input type="hidden" name="nomcompte" th:value="${compte.titulaireDuCompte}">
+                    <input id="suppCompte" type="submit" value="Supprimer le compte">
+                </form>
+            </li>
+        </ul>
+    </div>
+
+    <hr>
+    <form method="post" action="AddBankAccountServlet" id="ajoutcompte">
+        <h2>Ajouter un compte bancaire</h2>
+        <label for="titulaire">Nom du titulaire :</label>
+        <input type="text" id="titulaire" name="titulaire" required><br>
+        <label for="numeroCompte">Numéro de compte bancaire :</label>
+        <input type="text" id="numeroCompte" name="numeroCompte" required><br>
+        <label for="solde">Solde :</label>
+        <input type="number" id="solde" name="solde" step="0.01" required><br>
+        <input type="submit" value="Ajouter le compte">
+    </form>
+</div> <br>
+</body>
+</html>

@@ -115,11 +115,6 @@ public class Client {
         return comptes;
     }
 
-    /*public void chargerCompteBancaire(){
-        CompteBancaireDAO compteBancaireDAO = new CompteBancaireDAO();
-        this.comptes = compteBancaireDAO.findAllByIdClient(this.getId());
-    }*/
-
     public void ajouterCompteBancaire(CompteBancaire compteBancaire){this.comptes.add(compteBancaire);}
 
     public void setComptes(List<CompteBancaire> comptesBancaires) {
@@ -130,11 +125,9 @@ public class Client {
         this.commandes.add(commande);
     }
 
-    /*public void chargerCommande(){
-        CommandeDAO commandeDAO = new CommandeDAO();
-        this.commandes = commandeDAO.findAllById(this.getId());
-    }*/
-
+    public void setCommandes(List<Commande> commandes) {
+        this.commandes = commandes;
+    }
     public List<Commande> getCommandes() {
         return this.commandes;
     }

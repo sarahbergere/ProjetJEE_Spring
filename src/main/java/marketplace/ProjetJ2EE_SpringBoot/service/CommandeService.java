@@ -1,5 +1,6 @@
 package marketplace.ProjetJ2EE_SpringBoot.service;
 
+import marketplace.ProjetJ2EE_SpringBoot.model.Client;
 import marketplace.ProjetJ2EE_SpringBoot.repository.CommandeRepository;
 import marketplace.ProjetJ2EE_SpringBoot.model.Commande;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class CommandeService {
         return commandeRepository.findAll();
     }
 
-    public List<Commande> getAllCommandesByIdClient(int idClient) {
-        return commandeRepository.findAllByClient_Id(idClient);
+    public List<Commande> getAllCommandesByIdClient(Client client) {
+        return commandeRepository.findAllByIdClient(client.getId());
     }
 
     public void updateCommande(Commande commande) {

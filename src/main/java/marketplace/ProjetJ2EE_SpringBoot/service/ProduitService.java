@@ -36,5 +36,9 @@ public class ProduitService {
     public void deleteProduit(Integer id) {
         produitRepository.deleteById(id);
     }
+
+    public List<Produit> getProduitsPopulaires() {
+        return produitRepository.findRandomProducts(4);
+    }
 }
 

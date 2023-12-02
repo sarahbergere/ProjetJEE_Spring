@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Détails du Produit</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        document.addEventListener('DOMContentLoaded', function () {
+            var buyButton = document.getElementById('buyButton');
+            var quantityInput = document.getElementById('quantiteInput');
+            var plusButton = document.getElementById('plusButton');
+            var minusButton = document.getElementById('minusButton');
+
+            plusButton.addEventListener('click', function () {
+                var currentQuantity = parseInt(quantityInput.value, 10);
+                quantityInput.value = currentQuantity + 1;
+
+                checkQuantity();
+            });
+
+            minusButton.addEventListener('click', function () {
+                var currentQuantity = parseInt(quantityInput.value, 10);
+                if (currentQuantity >= 1) {
+                    quantityInput.value = currentQuantity - 1;
+                }
+
+                checkQuantity();
+            });
+
+            function checkQuantity() {
+                var currentQuantity = parseInt(quantityInput.value, 10);
+                var maxQuantity = parseInt(quantityInput.max, 10);
+
+                plusButton.disabled = currentQuantity >= maxQuantity;
+            }
+
+            buyButton.addEventListener('click', function () {
+                var idProduit = this.getAttribute('data-product');
+                var quantite = quantityInput.value;
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'AddBasket', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        alert('Produit ajouté au panier avec succès !');
+                        location.reload();
+                    }
+                };
+                xhr.send('productId=' + encodeURIComponent(idProduit) + '&quantity=' + encodeURIComponent(quantite));
+            });
+        });
+        /*]]>*/
+    </script>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="product-details">
+    <div class="product-image">
+        <img th:src="${produit.image}" th:alt="${produit.nom}" width="150">
+    </div>
+    <div class="product-info">
+        <h2>Détails du Produit</h2>
+        <p><strong>Nom :</strong> <span th:text="${produit.nom}"></span></p>
+        <p><strong>Prix :</strong> <span th:text="${produit.prix} + ' €'"></span></p>
+        <p><strong>Description :</strong> <span th:text="${produit.description}"></span></p>
+        <p><strong>Stock :</strong> <span th:text="${produit.stock}"></span></p>
+        <br>
+        <button type="button" id="minusButton">-</button>
+        <input type="number" id="quantiteInput" value="0" min="0" th:max="${produit.stock - quantitePanier}">
+        <button type="button" id="plusButton">+</button>
+        <br>
+        <br>
+        <button type="button" id="buyButton" th:data-product="${produit.id}">Acheter</button>
+    </div>
+</div>
+</body>
+</html>
