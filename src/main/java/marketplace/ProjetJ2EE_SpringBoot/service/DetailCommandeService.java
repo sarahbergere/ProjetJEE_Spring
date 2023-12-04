@@ -1,5 +1,6 @@
 package marketplace.ProjetJ2EE_SpringBoot.service;
 
+import marketplace.ProjetJ2EE_SpringBoot.model.Paiement;
 import marketplace.ProjetJ2EE_SpringBoot.repository.DetailCommandeRepository;
 import marketplace.ProjetJ2EE_SpringBoot.model.DetailCommande;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,10 @@ public class DetailCommandeService {
     @Autowired
     public DetailCommandeService(DetailCommandeRepository detailCommandeRepository) {
         this.detailCommandeRepository = detailCommandeRepository;
+    }
+
+    public void createDetailCommande(DetailCommande detailCommande) {
+        detailCommandeRepository.save(detailCommande);
     }
 
     public void saveDetailCommande(DetailCommande detailCommande) {

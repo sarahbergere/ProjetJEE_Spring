@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,9 +22,10 @@ public class AddBasketController {
     }
 
     @PostMapping("/AddBasket")
-    public String addToBasket(@RequestParam("productId") Integer productId,
+    public String addToBasket(@RequestParam("idproduct") Integer productId,
                               @RequestParam("quantity") Integer quantity,
-                              HttpSession session) {
+                              HttpSession session,
+                              RedirectAttributes redirectAttributes) {
 
         Map<Integer, Integer> panier = (Map<Integer, Integer>) session.getAttribute("panier");
 
@@ -52,6 +54,7 @@ public class AddBasketController {
                 }
             }
 
+            redirectAttributes.addAttribute("idproduct", productId);
             return "redirect:/pageDesc";
         } else {
             return "redirect:/erreur";

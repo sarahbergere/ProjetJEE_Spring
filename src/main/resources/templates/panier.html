@@ -124,8 +124,8 @@
     <p>Votre panier est vide.</p>
 </div>
 
-<div th:if="${erreurMessage != null}">
-    <p class="erreur-message" th:text="${erreurMessage}"></p>
+<div th:if="${erreurMessage}" class="erreur-message">
+    <p th:utext="${erreurMessage}"></p>
 </div>
 </body>
 </html>

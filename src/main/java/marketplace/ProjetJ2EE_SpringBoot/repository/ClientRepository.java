@@ -18,7 +18,7 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
     @Query("SELECT u.motDePasse FROM Utilisateur u JOIN Client c ON u.id = c.idUtilisateur WHERE c.idUtilisateur = :clientId")
     String getPasswordById(@Param("clientId") int clientId);
 
-    List<Commande> findCommandesById(Long clientId);
+    List<Commande> findCommandesById(int clientId);
 
-    List<CompteBancaire> findComptesById(Long clientId);
+    List<CompteBancaire> findComptesById(int clientId);
 }

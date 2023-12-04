@@ -36,7 +36,7 @@ public class CompteBancaireService {
     }
 
     public void updateCompteBancaire(CompteBancaire compteBancaire) {
-        // Votre logique de mise à jour ici
+        compteBancaireRepository.save(compteBancaire);
     }
 
     public void deleteCompteBancaire(int id) {

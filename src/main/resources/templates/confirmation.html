@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirmation de commande</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        ul {
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<h1>Confirmation de commande</h1>
+
+<div th:if="${commande != null and detailsCommande != null}">
+    <p>Merci pour votre commande !</p>
+    <p>Détails de la commande :</p>
+
+    <ul>
+        <li>Numéro de commande : <span th:text="${commande.id}"></span></li>
+        <li>Date de commande : <span th:text="${commande.dateDeCommande}"></span></li>
+        <li>Montant total : <span th:text="${commande.montant}"></span> €</li>
+    </ul>
+
+    <p>Produits commandés :</p>
+    <ul>
+        <li th:each="detail : ${detailsCommande}"><span th:text="${detail.produit.nom}"></span> (Quantité : <span th:text="${detail.quantite}"></span>)</li>
+    </ul>
+</div>
+
+<div th:unless="${commande != null and detailsCommande != null}">
+    <p>Aucune commande trouvée.</p>
+</div>
+</body>
+</html>

@@ -17,6 +17,10 @@ public class PaiementService {
         this.paiementRepository = paiementRepository;
     }
 
+    public void createPaiement(Paiement paiement) {
+        paiementRepository.save(paiement);
+    }
+
     public void savePaiement(Paiement paiement) {
         paiementRepository.save(paiement);
     }

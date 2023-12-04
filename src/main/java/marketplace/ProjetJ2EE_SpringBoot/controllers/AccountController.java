@@ -24,7 +24,7 @@ public class AccountController {
                 if ("client".equals(role)) {
                     return "forward:/client";
                 } else if ("admin".equals(role)) {
-                    return "admin";
+                    return "forward:/admin";
                 } else {
                     return "redirect:/login";
                 }
