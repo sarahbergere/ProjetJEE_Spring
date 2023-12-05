@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Marketplace</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script>
+        function redirectToEdit(button) {
+            var idproduct = button.getAttribute('data-product-id');
+            window.location.href = "/product/edit/" + encodeURIComponent(idproduct);
+        }
+
+        function redirectToDeleteProduct(button) {
+            var idproduct = button.getAttribute('data-product-id');
+            window.location.href = "/product/delete/" + encodeURIComponent(idproduct);
+        }
+
+        function redirectToAddProduit() {
+            window.location.href = "addProduit.jsp";
+        }
+    </script>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="container">
+    <button th:if="${canAddProduct}" type="button" onclick="window.location.href='addProduct'">Ajouter un produit</button>
+
+    <div th:each="produit : ${produits}" class="card">
+        <h3 th:text="${produit.nom}"></h3>
+        <img th:src="${produit.image}" alt="${produit.nom} Image">
+        <p><b th:text="${produit.prix} + ' €'"></b></p>
+        <p class="stock"><i th:text="'Il en reste ' + ${produit.stock} + ' !'"></i></p>
+
+        <button th:if="${'modification' == droit or 'tout' == droit}" type="button" th:data-product-id="${produit.id}" onclick="redirectToEdit(this)">Modifier</button>
+        <br>
+        <button th:if="${'suppression' == droit or 'tout' == droit}" type="button" th:data-product-id="${produit.id}" onclick="redirectToDeleteProduct(this)">Supprimer</button>
+        </br>
+
+    </div>
+</div>
+</body>
+</html>

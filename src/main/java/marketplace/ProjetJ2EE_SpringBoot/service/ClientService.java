@@ -3,6 +3,7 @@ package marketplace.ProjetJ2EE_SpringBoot.service;
 import marketplace.ProjetJ2EE_SpringBoot.model.Client;
 import marketplace.ProjetJ2EE_SpringBoot.model.Commande;
 import marketplace.ProjetJ2EE_SpringBoot.model.CompteBancaire;
+import marketplace.ProjetJ2EE_SpringBoot.model.Utilisateur;
 import marketplace.ProjetJ2EE_SpringBoot.repository.ClientRepository;
 import marketplace.ProjetJ2EE_SpringBoot.repository.CommandeRepository;
 import marketplace.ProjetJ2EE_SpringBoot.repository.CompteBancaireRepository;
@@ -56,5 +57,9 @@ public class ClientService {
     public void chargerCompteBancaire(Client client) {
         List<CompteBancaire> comptes = compteBancaireRepository.findAllByIdClient(client.getId());
         client.setComptes(comptes);
+    }
+
+    public void createClient(Client nouveauClient) {
+        Client savedClient = clientRepository.save(nouveauClient);
     }
 }

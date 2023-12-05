@@ -22,8 +22,8 @@ public class UtilisateurService {
         return savedUtilisateur.getId();
     }
 
-    public Utilisateur findUtilisateurById(Long id) {
-        return utilisateurRepository.findById(id).orElse(null);
+    public Utilisateur findUtilisateurById(int id) {
+        return utilisateurRepository.findById((long) id).orElse(null);
     }
 
     public List<Utilisateur> findAllUtilisateurs() {
@@ -37,4 +37,5 @@ public class UtilisateurService {
     public void deleteUtilisateur(Long id) {
         utilisateurRepository.deleteById(id);
     }
+    public Utilisateur findByUsername(String username){ return utilisateurRepository.findByUsername(username);};
 }

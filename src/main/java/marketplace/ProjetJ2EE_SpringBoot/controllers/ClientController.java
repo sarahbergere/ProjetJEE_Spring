@@ -29,7 +29,7 @@ public class ClientController {
             Client client = (Client) session.getAttribute("client");
 
             String modifierProduit = client.getDroit().equals(Droit.aucun.toString()) ? "" : "<hr><div>\n" +
-                    "        <h2>Vos droits</h2><a href=\"editProducts\"><button>Modifier Produit</button></a></p>\n" +
+                    "        <h2>Vos droits</h2><a href=\"/editProducts\"><button>Modifier Produit</button></a></p>\n" +
                     "    </div>";
 
             session.setAttribute("modifierProduit", modifierProduit);
