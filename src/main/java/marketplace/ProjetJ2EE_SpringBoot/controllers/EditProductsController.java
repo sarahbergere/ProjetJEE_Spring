@@ -1,6 +1,6 @@
-// ProductController.java
 package marketplace.ProjetJ2EE_SpringBoot.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import marketplace.ProjetJ2EE_SpringBoot.model.Client;
 import marketplace.ProjetJ2EE_SpringBoot.model.Produit;
@@ -19,11 +19,16 @@ public class EditProductsController {
     private ProduitService produitService;
 
     @GetMapping("/editProducts")
-    public String showProducts(Model model, HttpSession session) {
+    public String showProducts(Model model, HttpServletRequest request) {
+        if(!isConnected(request.getSession())){
+            return "redirect:/account";
+        }
+        HttpSession session = request.getSession(false);
         Client client = (Client) session.getAttribute("client");
+
         String droit = (client != null) ? client.getDroit() : (String) session.getAttribute("role");
 
-        if ("ajout".equals(droit) || "tout".equals(droit)) {
+        if ("ajout".equals(droit) || "tout".equals(droit) || "admin".equals(droit)) {
             model.addAttribute("canAddProduct", true);
         }
 
@@ -32,5 +37,10 @@ public class EditProductsController {
         model.addAttribute("droit", droit);
 
         return "editProducts";
+    }
+
+    private boolean isConnected(HttpSession session) {
+        Client client = (Client) session.getAttribute("client");
+        return ((client != null && !client.getDroit().equals("aucun")) || (session.getAttribute("role") != null && session.getAttribute("role").equals("admin")));
     }
 }

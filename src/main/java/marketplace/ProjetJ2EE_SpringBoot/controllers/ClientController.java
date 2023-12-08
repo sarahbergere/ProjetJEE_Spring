@@ -5,6 +5,7 @@ import marketplace.ProjetJ2EE_SpringBoot.model.CompteBancaire;
 import marketplace.ProjetJ2EE_SpringBoot.model.Droit;
 import marketplace.ProjetJ2EE_SpringBoot.service.ClientService;
 import marketplace.ProjetJ2EE_SpringBoot.service.CompteBancaireService;
+import marketplace.ProjetJ2EE_SpringBoot.service.PaiementService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +19,13 @@ public class ClientController {
 
     private final ClientService clientService;
 
+    private final PaiementService paiementService;
+
     private final CompteBancaireService compteBancaireService;
 
-    public ClientController(ClientService clientService, CompteBancaireService compteBancaireService) {
+    public ClientController(ClientService clientService, PaiementService paiementService, CompteBancaireService compteBancaireService) {
         this.clientService = clientService;
+        this.paiementService = paiementService;
         this.compteBancaireService = compteBancaireService;
     }
 
@@ -71,6 +75,7 @@ public class ClientController {
     ) {
         HttpSession session = request.getSession(false);
         Client client = (Client) session.getAttribute("client");
+        paiementService.mettreAJourPaiementId(Integer.parseInt(compteBancaireSupp));
         compteBancaireService.deleteCompteBancaire(Integer.parseInt(compteBancaireSupp));
         if (client.getComptes() != null) {
             client.getComptes().removeIf(account -> account.getId() == Integer.parseInt(compteBancaireSupp));

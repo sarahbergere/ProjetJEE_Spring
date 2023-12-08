@@ -1,6 +1,6 @@
-package marketplace.ProjetJ2EE_SpringBoot.repository;// CommandeRepository.java
+package marketplace.ProjetJ2EE_SpringBoot.repository;
+
 import marketplace.ProjetJ2EE_SpringBoot.model.Commande;
-import marketplace.ProjetJ2EE_SpringBoot.model.CompteBancaire;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

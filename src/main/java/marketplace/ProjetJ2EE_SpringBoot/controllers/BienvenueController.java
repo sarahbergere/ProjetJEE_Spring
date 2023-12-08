@@ -23,4 +23,11 @@ public class BienvenueController {
         model.addAttribute("produits", produitsPopulaires);
         return "bienvenue";
     }
+
+    @GetMapping("/")
+    public String index(Model model) {
+        List<Produit> produitsPopulaires = produitService.getProduitsPopulaires();
+        model.addAttribute("produits", produitsPopulaires);
+        return "bienvenue";
+    }
 }

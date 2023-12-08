@@ -4,6 +4,7 @@ import marketplace.ProjetJ2EE_SpringBoot.repository.PaiementRepository;
 import marketplace.ProjetJ2EE_SpringBoot.model.Paiement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -39,5 +40,10 @@ public class PaiementService {
 
     public void deletePaiement(Long id) {
         paiementRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void mettreAJourPaiementId(int id) {
+        paiementRepository.setPaiementToNullById(id);
     }
 }
