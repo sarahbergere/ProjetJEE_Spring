@@ -25,12 +25,12 @@ Veuillez à bien importer la base de donnée dans MySQL et de modifier le fichie
 
 ## Fonctionnalités
 
-- [ ] Ajout de produits
-- [ ] Édition de produits
-- [ ] Suppression de produits
-- [ ] Visualisation du panier
-- [ ] Commande et paiement en ligne
-- [ ] Ajout et modification de droit de client
-- [ ] Page Admin
-- [ ] Ajout et Suppression de compte bancaire pour les clients
-- [ ] Envoie de mail à l'inscription et à la validation de commande 
+- [X] Ajout de produits
+- [X] Édition de produits
+- [X] Suppression de produits
+- [X] Visualisation du panier
+- [X] Commande et paiement en ligne
+- [X] Ajout et modification de droit de client
+- [X] Page Admin
+- [X] Ajout et Suppression de compte bancaire pour les clients
+- [X] Envoie de mail à l'inscription et à la validation de commande 
