@@ -5,6 +5,7 @@ import marketplace.ProjetJ2EE_SpringBoot.repository.DetailCommandeRepository;
 import marketplace.ProjetJ2EE_SpringBoot.model.DetailCommande;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -44,5 +45,9 @@ public class DetailCommandeService {
 
     public List<DetailCommande> findDetailCommandesByCommandeId(int commandeId) {
         return detailCommandeRepository.findByCommande_Id(commandeId);
+    }
+    @Transactional
+    public void mettreAJourProduitId(int id) {
+        detailCommandeRepository.setProduitToNullById(id);
     }
 }

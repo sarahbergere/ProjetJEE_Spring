@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier le produit</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.CSS}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="container" th:if="${product != null}">
+    <button type="button" onclick="window.location.href='/editProducts'">Retour</button><br><br>
+
+    <form action="/product/update" method="post">
+        <input type="hidden" name="id" th:value="${product.id}">
+        <label for="nom">Nom:</label>
+        <input id="nom" type="text" name="nom" th:value="${product.nom}">
+        <br>
+        <label for="price">Prix:</label>
+        <input id="price" type="text" name="price" th:value="${product.prix}">
+        <br>
+        <label for="description">Description:</label>
+        <input id="description" type="text" name="description" th:value="${product.description}">
+        <br>
+        <label for="stock">Stock:</label>
+        <input id="stock" type="text" name="stock" th:value="${product.stock}">
+        <br>
+        <label for="imageUrl">URL de l'image:</label>
+        <input id="imageUrl" type="text" name="imageUrl" th:value="${product.image}">
+        <br>
+        <input type="submit" value="Enregistrer les modifications">
+    </form>
+</div>
+<div class="container" th:unless="${product != null}">
+    <p th:text="'Le produit ' + ${product.nom} + ' n\'a pas été trouvé.'"></p>
+</div>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Page Client</title>
-    <link rel="stylesheet" type="text/css" href="style.CSS">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.CSS}">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -139,7 +139,7 @@
         <ul>
             <li th:each="compte : ${session.client.comptes}">
                 <span th:text="${compte.titulaireDuCompte} + ' - ' + ${compte.numeroDeCompte} + ' - ' + ${compte.solde} + ' €'"></span>
-                <form action="DeleteBankAccountServlet" method="post" style="display:inline;padding:0">
+                <form action="/client/supprimeCompte" method="post" style="display:inline;padding:0">
                     <input type="hidden" name="compteId" th:value="${compte.id}">
                     <input type="hidden" name="nomcompte" th:value="${compte.titulaireDuCompte}">
                     <input id="suppCompte" type="submit" value="Supprimer le compte">
@@ -149,7 +149,7 @@
     </div>
 
     <hr>
-    <form method="post" action="AddBankAccountServlet" id="ajoutcompte">
+    <form method="post" action="/client/compte" id="ajoutcompte">
         <h2>Ajouter un compte bancaire</h2>
         <label for="titulaire">Nom du titulaire :</label>
         <input type="text" id="titulaire" name="titulaire" required><br>

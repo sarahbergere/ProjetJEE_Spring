@@ -4,8 +4,10 @@ import marketplace.ProjetJ2EE_SpringBoot.repository.ProduitRepository;
 import marketplace.ProjetJ2EE_SpringBoot.model.Produit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProduitService {
@@ -21,6 +23,9 @@ public class ProduitService {
         produitRepository.save(produit);
     }
 
+    @Transactional
+    public void saveProduit(int id,String nom, double price, String description, int stock, String imageUrl){produitRepository.update(id, nom, price, description,stock,imageUrl );}
+
     public Produit findProduitById(Integer id) {
         return produitRepository.findById(id).orElse(null);
     }
@@ -29,12 +34,20 @@ public class ProduitService {
         return produitRepository.findAll();
     }
 
+
     public void updateProduit(Produit produit) {
         produitRepository.save(produit);
     }
 
-    public void deleteProduit(Integer id) {
-        produitRepository.deleteById(id);
+    public int deleteProduit(int id) {
+        Optional<Produit> existingProduct = produitRepository.findById(id);
+
+        if (existingProduct.isPresent()) {
+            produitRepository.delete(existingProduct.get());
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     public List<Produit> getProduitsPopulaires() {

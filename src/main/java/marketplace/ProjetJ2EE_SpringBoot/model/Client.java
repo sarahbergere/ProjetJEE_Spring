@@ -50,9 +50,6 @@ public class Client {
         this.numeroTelephone = numeroTelephone;
         this.commandes = new ArrayList<>();
         this.droit = droit;
-
-        /*this.chargerCommande();
-        this.chargerCompteBancaire();*/
     }
 
     public int getId() {

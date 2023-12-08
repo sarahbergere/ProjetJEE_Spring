@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Marketplace</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.CSS}">
     <script>
         function redirectToPageDesc(id) {
             window.location.href = "pageDesc?idproduct=" + encodeURIComponent(id);

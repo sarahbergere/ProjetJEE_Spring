@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Marketplace - Supprimer le produit</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/style.CSS}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<button type="button" onclick="window.location.href='/editProducts'">Retour à la page précédente</button><br><br>
+
+<div class="container" >
+  <div th:if="${rowsAffected == 1}" class="success-message">
+    Le produit a été supprimé avec succès.
+  </div>
+  <div th:if="${rowsAffected == 0}" class="error-message">
+    Erreur lors de la suppression du produit. Veuillez réessayer.
+  </div>
+</div>
+</body>
+</html>

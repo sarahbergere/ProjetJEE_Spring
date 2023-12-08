@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un Produit</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.CSS}">
+</head>
+
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+<h2>Ajouter un Produit</h2>
+<form action="/product/create" method="post" id="ajoutProduit">
+    Nom: <input type="text" name="nom" required><br>
+    Prix: <input type="number" name="prix" required><br>
+    Description: <input type="text" name="description" required><br>
+    Stock: <input type="number" name="stock" required><br>
+    Image: <input type="text" name="image" required><br>
+    <input type="submit" value="Ajouter" class="neumorphic-header button">
+</form>
+</body>
+</html>
