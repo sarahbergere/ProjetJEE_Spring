@@ -32,9 +32,9 @@
         <p><b th:text="${produit.prix} + ' €'"></b></p>
         <p class="stock"><i th:text="'Il en reste ' + ${produit.stock} + ' !'"></i></p>
 
-        <button th:if="${'modification' == droit or 'tout' == droit}" type="button" th:data-product-id="${produit.id}" th:onclick="'redirectToEdit(this)'">Modifier</button>
+        <button th:if="${'modification' == droit or 'tout' == droit or 'admin' == droit}" type="button" th:data-product-id="${produit.id}" th:onclick="'redirectToEdit(this)'">Modifier</button>
         <br>
-        <button th:if="${'suppression' == droit or 'tout' == droit}" type="button" th:data-product-id="${produit.id}" th:onclick="'redirectToDeleteProduct(this)'">Supprimer</button>
+        <button th:if="${'suppression' == droit or 'tout' == droit or 'admin' == droit}" type="button" th:data-product-id="${produit.id}" th:onclick="'redirectToDeleteProduct(this)'">Supprimer</button>
         </br>
 
     </div>

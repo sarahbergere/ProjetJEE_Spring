@@ -5,7 +5,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 0;
-    background: linear-gradient(to bottom right, #FFD2E5, #AAD8FF); /* Utilisez les couleurs pastel de votre choix */
+    background: linear-gradient(to bottom right, #FFD2E5, #AAD8FF);
 }
 
 .neumorphic-header {
@@ -67,7 +67,6 @@ button:active {
 }
 
 .card {
-    /* Retirez 'float: left;' pour utiliser flexbox */
     margin: 10px;
 }
 

@@ -23,9 +23,6 @@ public class ProduitService {
         produitRepository.save(produit);
     }
 
-    @Transactional
-    public void saveProduit(int id,String nom, double price, String description, int stock, String imageUrl){produitRepository.update(id, nom, price, description,stock,imageUrl );}
-
     public Produit findProduitById(Integer id) {
         return produitRepository.findById(id).orElse(null);
     }
@@ -33,7 +30,6 @@ public class ProduitService {
     public List<Produit> findAllProduits() {
         return produitRepository.findAll();
     }
-
 
     public void updateProduit(Produit produit) {
         produitRepository.save(produit);

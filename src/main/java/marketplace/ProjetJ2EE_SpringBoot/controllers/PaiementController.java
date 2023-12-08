@@ -1,5 +1,6 @@
 package marketplace.ProjetJ2EE_SpringBoot.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import marketplace.ProjetJ2EE_SpringBoot.Functions.PanierUtil;
 import marketplace.ProjetJ2EE_SpringBoot.model.*;
 import marketplace.ProjetJ2EE_SpringBoot.service.*;
@@ -50,7 +51,11 @@ public class PaiementController {
             @RequestParam(value = "titulaire", required = false) String titulaire,
             @RequestParam(value = "numeroCompte", required = false) String numeroCompte,
             @RequestParam(value = "solde", required = false) Double solde,
-            HttpSession session, Model model) throws IOException {
+            HttpServletRequest request) throws IOException {
+        if(!isConnected(request.getSession())){
+            return "redirect:/bienvenue";
+        }
+        HttpSession session = request.getSession(false);
         String messageErreur = "";
         int idCompteBancaire = 0;
 
@@ -71,7 +76,7 @@ public class PaiementController {
             compteBancaireService.updateCompteBancaire(compteBancaire);
             idCompteBancaire = compteBancaireId;
         } else if ("lierCompte".equals(optionCompte)) {
-            double nouveauSolde = Double.parseDouble(session.getAttribute("solde").toString());
+            double nouveauSolde = Double.parseDouble(solde.toString());
             if (nouveauSolde < montantPanier) {
                 messageErreur = "Le solde de votre compte est inférieur au montant de votre panier. Veuillez choisir un autre compte bancaire.";
                 session.setAttribute("messageErreur", messageErreur);
@@ -141,7 +146,11 @@ public class PaiementController {
     }
 
     @GetMapping("/paiement")
-    public String afficherPagePaiement(Model model, HttpSession session) {
+    public String afficherPagePaiement(Model model, HttpServletRequest request) {
+        if(!isConnected(request.getSession())){
+            return "redirect:/bienvenue";
+        }
+        HttpSession session = request.getSession(false);
         Client client = (Client) session.getAttribute("client");
 
         if (client != null) {
@@ -152,7 +161,11 @@ public class PaiementController {
     }
 
     @GetMapping("/confirmation")
-    public String afficherConfirmationCommande(HttpSession session, Model model) {
+    public String afficherConfirmationCommande(HttpServletRequest request, Model model) {
+        if(!isConnected(request.getSession())){
+            return "redirect:/bienvenue";
+        }
+        HttpSession session = request.getSession(false);
         Commande commande = (Commande) session.getAttribute("commande");
         List<DetailCommande> detailsCommande = (List<DetailCommande>) session.getAttribute("detailsCommande");
 
@@ -160,5 +173,10 @@ public class PaiementController {
         model.addAttribute("detailsCommande", detailsCommande);
 
         return "confirmation";
+    }
+
+    private boolean isConnected(HttpSession session) {
+        Client client = (Client) session.getAttribute("client");
+        return ((client != null && session.getAttribute("panier") != null));
     }
 }
