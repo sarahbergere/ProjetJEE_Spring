@@ -21,3 +21,16 @@ cd projet-j2ee-springboot
 
 ## Configuration
 Vous pouvez configurer l'application en modifiant le fichier src/main/resources/application.properties.
+Veuillez à bien importer la base de donnée dans MySQL et de modifier le fichier ci dessus en conséquence. 
+
+## Fonctionnalités
+
+- [ ] Ajout de produits
+- [ ] Édition de produits
+- [ ] Suppression de produits
+- [ ] Visualisation du panier
+- [ ] Commande et paiement en ligne
+- [ ] Ajout et modification de droit de client
+- [ ] Page Admin
+- [ ] Ajout et Suppression de compte bancaire pour les clients
+- [ ] Envoie de mail à l'inscription et à la validation de commande 
