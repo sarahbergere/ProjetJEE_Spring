@@ -16,6 +16,7 @@ Avant de commencer, assurez-vous d'avoir installé les outils suivants :
 1. Clonez le dépôt :
 
 git clone https://github.com/sarahbergere/projet-j2ee-springboot.git
+
 cd projet-j2ee-springboot
 
 ## Configuration
