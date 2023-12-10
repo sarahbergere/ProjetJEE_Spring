@@ -20,6 +20,7 @@ public class ValiderPanierController {
         String errorMessage = validerPanierService.validerPanier(session);
         session.setAttribute("erreurMessage", errorMessage);
         if (errorMessage.startsWith("redirect:")) {
+            session.removeAttribute("erreurMessage");
             return errorMessage;
         } else {
             model.addAttribute("erreurMessage", errorMessage);

@@ -51,7 +51,8 @@ public class PaiementController {
             @RequestParam(value = "titulaire", required = false) String titulaire,
             @RequestParam(value = "numeroCompte", required = false) String numeroCompte,
             @RequestParam(value = "solde", required = false) Double solde,
-            HttpServletRequest request) throws IOException {
+            HttpServletRequest request,
+            Model model) throws IOException {
         if(!isConnected(request.getSession())){
             return "redirect:/bienvenue";
         }
@@ -70,7 +71,7 @@ public class PaiementController {
             if (compteBancaire.getSolde() < montantPanier) {
                 messageErreur = "Le solde du compte choisi est inférieur au montant de votre panier. Veuillez choisir un autre compte bancaire.";
                 session.setAttribute("messageErreur", messageErreur);
-                return "forward:/paiement.jsp";
+                return "redirect:/paiement";
             }
             compteBancaire.setSolde(compteBancaire.getSolde() - montantPanier);
             compteBancaireService.updateCompteBancaire(compteBancaire);
@@ -80,7 +81,7 @@ public class PaiementController {
             if (nouveauSolde < montantPanier) {
                 messageErreur = "Le solde de votre compte est inférieur au montant de votre panier. Veuillez choisir un autre compte bancaire.";
                 session.setAttribute("messageErreur", messageErreur);
-                return "forward:/paiement.jsp";
+                return "redirect:/paiement";
             }
 
             compteBancaire = new CompteBancaire(titulaire, numeroCompte, nouveauSolde - montantPanier, (Client) session.getAttribute("client"));
@@ -150,8 +151,15 @@ public class PaiementController {
         if(!isConnected(request.getSession())){
             return "redirect:/bienvenue";
         }
+
         HttpSession session = request.getSession(false);
         Client client = (Client) session.getAttribute("client");
+
+        String messageErreur = (String) session.getAttribute("messageErreur");
+        if (messageErreur != null) {
+            model.addAttribute("messageErreur", messageErreur);
+            session.removeAttribute("messageErreur");
+        }
 
         if (client != null) {
             model.addAttribute("client", client);
@@ -162,9 +170,6 @@ public class PaiementController {
 
     @GetMapping("/confirmation")
     public String afficherConfirmationCommande(HttpServletRequest request, Model model) {
-        if(!isConnected(request.getSession())){
-            return "redirect:/bienvenue";
-        }
         HttpSession session = request.getSession(false);
         Commande commande = (Commande) session.getAttribute("commande");
         List<DetailCommande> detailsCommande = (List<DetailCommande>) session.getAttribute("detailsCommande");

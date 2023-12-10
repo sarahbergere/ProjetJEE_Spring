@@ -54,6 +54,8 @@
 
 <form method="post" th:action="@{/ProcessPayment}">
 
+    <div th:text="${messageErreur}" style="color: red;"></div>
+
     <label for="nom">Nom :</label>
     <input type="text" id="nom" name="nom" required><br>
 
@@ -77,12 +79,16 @@
     <input type="radio" id="choisirCompteLie" name="optionCompte" value="choisirCompteLie">
     <label for="choisirCompteLie">Choisir un compte bancaire déjà lié :</label><br>
 
+
     <div id="compteBancaireLie" class="hide">
-        <label for="compteBancaire">Sélectionnez un compte bancaire existant :</label>
-        <select id="compteBancaire" name="compteBancaire">
-            <option th:each="compte : ${client.comptes}" th:value="${compte.id}" th:text="${compte.titulaireDuCompte} + ' - ' + ${compte.solde} + ' €'"></option>
-        </select><br>
+        <th:block th:if="${not #lists.isEmpty(client.comptes)}">
+            <label for="compteBancaire">Sélectionnez un compte bancaire existant :</label>
+            <select id="compteBancaire" name="compteBancaire">
+                <option th:each="compte : ${client.comptes}" th:value="${compte.id}" th:text="${compte.titulaireDuCompte} + ' - ' + ${compte.solde} + ' €'"></option>
+            </select><br>
+        </th:block>
     </div>
+
 
     <div id="nouveauCompteBancaire" class="hide">
         <h2>Ajouter un nouveau compte bancaire</h2>
