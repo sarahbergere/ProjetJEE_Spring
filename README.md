@@ -38,6 +38,11 @@ N'oubliez pas de vérifier la console de l'application pour les éventuels messa
 
 **Note :** Pour arrêter l'application, retournez à votre environnement de développement Java et arrêtez l'exécution du fichier `ProjetJ2EeSpringBootApplication.java` ou fermez la fenêtre du terminal où l'application est en cours d'exécution.
 
+### Mot de passe des comptes existant
+
+Pour tous les comptes clients le mot de passe est "client". 
+
+Pour avoir accès au compte admin, il suffit de mettre le pseudo "sarah" et le mot de passe "admin". 
 
 ## Fonctionnalités
 
